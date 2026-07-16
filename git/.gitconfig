@@ -13,6 +13,7 @@
 	autocrlf = input
 	eol = lf
 	filemode = true
+	excludesfile = /home/avee/.gitignore_global
 [pull]
 	rebase = false
 [fetch]

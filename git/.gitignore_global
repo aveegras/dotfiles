@@ -1,0 +1,27 @@
+# Windows
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Editors
+*.swp
+*.swo
+*~
+.idea/
+.vscode/*.log
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+
+# Logs
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
