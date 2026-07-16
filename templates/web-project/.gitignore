@@ -30,7 +30,9 @@ pnpm-debug.log*
 __pycache__/
 
 # Editors and OS
-.vscode/
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
 .idea/
 .DS_Store
 Thumbs.db

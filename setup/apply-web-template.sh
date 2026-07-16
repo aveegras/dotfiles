@@ -19,6 +19,8 @@ files=(
   ".gitignore"
   ".node-version"
   "biome.json"
+  ".vscode/settings.json"
+  ".vscode/extensions.json"
 )
 
 printf 'Applying web-project baseline to:\n  %s\n\n' "$TARGET_DIR"
@@ -26,6 +28,8 @@ printf 'Applying web-project baseline to:\n  %s\n\n' "$TARGET_DIR"
 for file in "${files[@]}"; do
   source_file="$TEMPLATE_DIR/$file"
   target_file="$TARGET_DIR/$file"
+
+  mkdir -p "$(dirname "$target_file")"
 
   if [[ -e "$target_file" ]]; then
     printf 'skip   %s already exists\n' "$file"
