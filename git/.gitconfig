@@ -1,0 +1,28 @@
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[user]
+	name = avee gras
+	email = 282999795+aveegras@users.noreply.github.com
+[init]
+	defaultBranch = main
+[core]
+	editor = code --wait
+[pull]
+	rebase = false
+[fetch]
+	prune = true
+[push]
+	autoSetupRemote = true
+[diff]
+	algorithm = histogram
+[merge]
+	conflictstyle = zdiff3
+[rerere]
+	enabled = true
+[color]
+	ui = auto
+[credential]
+	helper = 

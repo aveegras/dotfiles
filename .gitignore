@@ -1,0 +1,53 @@
+# Secrets and environment variables
+.env
+.env.*
+!.env.example
+*.secret
+*.secrets
+
+# Private keys and certificates
+*.key
+*.pem
+*.p12
+*.pfx
+id_rsa
+id_rsa.*
+id_ed25519
+id_ed25519.*
+authorized_keys
+
+# Shell history
+.zsh_history
+.bash_history
+.lesshst
+.python_history
+.node_repl_history
+
+# GitHub and authentication tokens
+.netrc
+.npmrc
+.pypirc
+.cargo/credentials
+.cargo/credentials.toml
+
+# Local caches and generated files
+.cache/
+.local/state/
+*.log
+*.tmp
+*.swp
+*.swo
+*~
+
+# Editors
+.idea/
+.vscode/
+.DS_Store
+
+# Project dependencies
+node_modules/
+.venv/
+__pycache__/
+target/
+dist/
+build/
