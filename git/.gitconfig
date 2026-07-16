@@ -10,6 +10,9 @@
 	defaultBranch = main
 [core]
 	editor = code --wait
+	autocrlf = input
+	eol = lf
+	filemode = true
 [pull]
 	rebase = false
 [fetch]
