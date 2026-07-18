@@ -1,0 +1,14 @@
+build-essential
+ca-certificates
+curl
+fzf
+gh
+git
+jq
+shellcheck
+tree
+unzip
+wget
+zip
+zoxide
+zsh

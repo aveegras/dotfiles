@@ -1,0 +1,142 @@
+#!/usr/bin/env bash
+
+set -Eeuo pipefail
+
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+BACKUP="$HOME/.dotfiles-backups/$(date +%Y%m%d-%H%M%S)"
+
+heading() {
+	printf '\n==> %s\n' "$1"
+}
+
+install_packages() {
+	heading "Installing Ubuntu packages"
+
+	mapfile -t packages < <(
+		grep -vE '^[[:space:]]*(#|$)' "$ROOT/packages/apt.txt"
+	)
+
+	sudo apt update
+	sudo apt install -y "${packages[@]}"
+}
+
+link_file() {
+	local source="$1"
+	local target="$2"
+	local relative
+
+	mkdir -p "$(dirname "$target")"
+
+	if [[ -L "$target" ]] &&
+		[[ "$(readlink -f "$target")" == "$(readlink -f "$source")" ]]; then
+		printf 'Already linked: %s\n' "$target"
+		return
+	fi
+
+	if [[ -e "$target" || -L "$target" ]]; then
+		relative="${target#"$HOME"/}"
+		mkdir -p "$BACKUP/$(dirname "$relative")"
+		mv "$target" "$BACKUP/$relative"
+		printf 'Backed up: %s\n' "$target"
+	fi
+
+	ln -s "$source" "$target"
+	printf 'Linked: %s\n' "$target"
+}
+
+link_configs() {
+	heading "Linking configuration"
+
+	link_file "$ROOT/home/.zshrc" "$HOME/.zshrc"
+	link_file "$ROOT/home/.gitconfig" "$HOME/.gitconfig"
+	link_file "$ROOT/home/.gitignore_global" "$HOME/.gitignore_global"
+}
+
+configure_git() {
+	heading "Configuring Git identity"
+
+	cat > "$HOME/.gitconfig.local" <<'GITEOF'
+[user]
+	name = aveegras
+	email = aveegras@gmail.com
+GITEOF
+
+	printf 'Git identity stored in ~/.gitconfig.local\n'
+}
+
+set_shell() {
+	heading "Setting Zsh as default shell"
+
+	local zsh_path
+	zsh_path="$(command -v zsh)"
+
+	if [[ "$SHELL" == "$zsh_path" ]]; then
+		printf 'Zsh is already the default shell.\n'
+	else
+		chsh -s "$zsh_path"
+		printf 'Restart Ubuntu after setup.\n'
+	fi
+}
+
+doctor() {
+	heading "System check"
+
+	for command_name in git gh curl zsh fzf zoxide jq tree; do
+		if command -v "$command_name" >/dev/null 2>&1; then
+			printf '✓ %-10s %s\n' \
+				"$command_name" \
+				"$(command -v "$command_name")"
+		else
+			printf '✗ %-10s missing\n' "$command_name"
+		fi
+	done
+
+	printf '\nGit name:  %s\n' "$(git config --global user.name || true)"
+	printf 'Git email: %s\n' "$(git config --global user.email || true)"
+	printf 'Shell:     %s\n' "$SHELL"
+
+	printf '\nConfiguration:\n'
+
+	for file in .zshrc .gitconfig .gitignore_global; do
+		if [[ -L "$HOME/$file" ]]; then
+			printf '✓ ~/%s -> %s\n' "$file" "$(readlink "$HOME/$file")"
+		else
+			printf '✗ ~/%s is not linked\n' "$file"
+		fi
+	done
+}
+
+show_help() {
+	cat <<'HELP'
+Usage: ./dotfiles COMMAND
+
+Commands:
+  install   Install Ubuntu packages
+  link      Back up and link configuration files
+  git       Configure Git identity
+  shell     Set Zsh as the default shell
+  doctor    Check the installation
+  all       Run the complete setup
+HELP
+}
+
+case "${1:-help}" in
+	install) install_packages ;;
+	link) link_configs ;;
+	git) configure_git ;;
+	shell) set_shell ;;
+	doctor) doctor ;;
+	all)
+		install_packages
+		link_configs
+		configure_git
+		set_shell
+		doctor
+		;;
+	help | -h | --help) show_help ;;
+	*)
+		printf 'Unknown command: %s\n\n' "$1" >&2
+		show_help
+		exit 1
+		;;
+esac

@@ -1,32 +1,44 @@
-# Avee's WSL Development Environment
+# Dotfiles
 
-Reproducible Ubuntu WSL setup for Counterforme, Clayd, CFX, and other development projects.
+Minimal Ubuntu WSL configuration.
 
-## Setup
+## Fresh installation
 
-1. Run ./setup/bootstrap-system.sh
-2. Restart WSL
-3. Run ./setup/bootstrap-user.sh
-
-This environment uses pnpm and Biome. ESLint is intentionally not installed.
-
-## Install on another WSL machine
-
-```sh
-git clone "git@github.com:aveegras/dotfiles.git" ~/dotfiles
+```bash
+git clone git@github.com:aveegras/dotfiles.git ~/dotfiles
 cd ~/dotfiles
-./setup/bootstrap-system.sh
+./dotfiles all
 ```
 
-Restart WSL from PowerShell:
+Restart Ubuntu after installation.
 
-```powershell
-wsl --shutdown
+## Commands
+
+```bash
+./dotfiles install
+./dotfiles link
+./dotfiles git
+./dotfiles shell
+./dotfiles doctor
+./dotfiles all
 ```
 
-Then reopen Ubuntu and run:
+## Structure
 
-```sh
-cd ~/dotfiles
-./setup/bootstrap-user.sh
+```text
+home/           configuration files
+packages/       Ubuntu package list
+dotfiles        setup command
+```
+
+Existing configuration files are backed up inside:
+
+```text
+~/.dotfiles-backups/
+```
+
+Machine-specific Zsh settings can be added to:
+
+```text
+~/.zshrc.local
 ```

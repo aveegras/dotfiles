@@ -1,0 +1,17 @@
+[include]
+	path = ~/.gitconfig.local
+
+[init]
+	defaultBranch = main
+
+[core]
+	excludesFile = ~/.gitignore_global
+
+[pull]
+	rebase = false
+
+[push]
+	autoSetupRemote = true
+
+[fetch]
+	prune = true
