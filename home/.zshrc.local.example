@@ -1,0 +1,15 @@
+# Copy this file to ~/.zshrc.local.
+# This file is not linked or committed automatically.
+
+# Extra PATH entries:
+# export PATH="$HOME/my-tools/bin:$PATH"
+
+# Private environment variables:
+# export EXAMPLE_API_KEY="replace-me"
+
+# Machine-specific aliases:
+# alias projects="cd ~/projects"
+
+# Work-specific Git identity:
+# git config user.name "aveegras"
+# git config user.email "aveegras@gmail.com"
