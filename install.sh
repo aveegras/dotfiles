@@ -72,3 +72,6 @@ done
 printf '\nInstallation complete.\n'
 printf 'Restart Ubuntu, or run:\n\n'
 printf '  exec zsh\n\n'
+
+# managed zsh tooling
+"$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)/setup/zsh-tools.sh" install

@@ -118,3 +118,6 @@ printf '\nUpdate complete.\n'
 printf 'Review repository changes with:\n\n'
 printf '  cd %q && git status\n\n' "$ROOT"
 printf 'This script does not commit or push automatically.\n'
+
+# managed zsh tooling
+"$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)/setup/zsh-tools.sh" update
